@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naveen Thella — The Sovereign Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#ffffff;
+  --deep:#f7f6f2;
+  --surface:#f0ede6;
+  --card:#ffffff;
+  --gold:#8a6520;
+  --gold2:#b8922e;
+  --gold-dim:rgba(138,101,32,0.08);
+  --gold-border:rgba(138,101,32,0.2);
+  --ice:#1a1408;
+  --muted:rgba(26,20,8,0.5);
+  --faint:rgba(26,20,8,0.1);
+  --red-accent:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--void);
+  color:var(--ice);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CURSOR */
+#CUR{position:fixed;pointer-events:none;z-index:9999;}
+#CUR .d{width:8px;height:8px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%);}
+#CUR .r{width:44px;height:44px;border:1px solid var(--gold);border-radius:50%;transform:translate(-50%,-50%);opacity:.4;transition:all .2s ease-out;}
+
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='.035'/%3E%3C/svg%3E");
+  opacity:.15;}
+
+/* ══════ NAV ══════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 4.5rem;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(28px);
+  border-bottom:1px solid var(--gold-border);
+  box-shadow:0 1px 30px rgba(138,101,32,0.08);
+  animation:navDrop .8s ease forwards;
+}
+@keyframes navDrop{from{transform:translateY(-100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.nav-brand{display:flex;flex-direction:column;line-height:1;}
+.nav-brand-name{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.2em;color:var(--gold);}
+.nav-brand-sub{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-top:.2rem;}
+.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center;}
+.nav-links a{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;font-weight:400;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{
+  padding:.5rem 1.6rem;
+  border:1px solid var(--gold);
+  color:var(--gold) !important;
+  letter-spacing:.14em !important;
+  transition:all .3s !important;
+  font-weight:500 !important;
+}
+.nav-cta:hover{background:var(--gold) !important;color:var(--void) !important;}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.burger span{width:22px;height:1.5px;background:var(--gold);}
+
+/* MOBILE NAV */
+.mobnav{position:fixed;inset:0;background:#fff;z-index:990;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;transform:translateX(100%);transition:transform .4s ease;}
+.mobnav.open{transform:translateX(0);}
+.mobnav a{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--ice);text-decoration:none;transition:color .3s;}
+.mobnav a:hover{color:var(--gold);}
+.mobnav-x{position:absolute;top:1.8rem;right:2.5rem;background:none;border:none;color:var(--gold);font-size:1.6rem;cursor:pointer;}
+
+/* ══════ HERO ══════ */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  padding:8rem 4.5rem 5rem;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(138,101,32,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(138,101,32,.05) 1px,transparent 1px);
+  background-size:70px 70px;
+}
+.hero-glow-r{position:absolute;right:-150px;top:50%;transform:translateY(-50%);
+  width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(138,101,32,.07) 0%,transparent 65%);
+  animation:pulse 8s ease-in-out infinite;pointer-events:none;}
+.hero-glow-l{position:absolute;left:-100px;bottom:-100px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(60,80,200,.04) 0%,transparent 65%);
+  animation:pulse 10s ease-in-out infinite 4s;pointer-events:none;}
+@keyframes pulse{0%,100%{transform:translateY(-50%) scale(1);}50%{transform:translateY(-50%) scale(1.08);}}
+
+.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 420px;gap:5rem;align-items:center;width:100%;}
+
+.hero-left{}
+.hero-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;animation:up .9s .1s both;}
+.eyebrow-bar{width:36px;height:1px;background:var(--gold);}
+.eyebrow-txt{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:400;}
+
+.hero-name{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.5rem,6vw,6rem);
+  font-weight:900;line-height:1;
+  letter-spacing:-.02em;margin-bottom:.4rem;
+  animation:up .9s .25s both;
+}
+.hero-name .first{color:#1a1408;}
+.hero-name .last{color:var(--gold);font-style:italic;}
+
+.hero-title-line{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.1rem,2vw,1.5rem);
+  letter-spacing:.22em;color:var(--muted);
+  margin-bottom:2.5rem;
+  animation:up .9s .4s both;
+}
+
+/* CREDENTIAL BARS */
+.cred-bars{display:flex;flex-direction:column;gap:.8rem;margin-bottom:2.5rem;animation:up .9s .55s both;}
+.cred-bar{
+  display:flex;align-items:center;gap:1.2rem;
+  padding:.9rem 1.4rem;
+  background:rgba(138,101,32,.04);
+  border:1px solid var(--gold-border);
+  border-left:3px solid var(--gold);
+  position:relative;overflow:hidden;
+  transition:background .3s;
+}
+.cred-bar:hover{background:rgba(138,101,32,.08);}
+.cred-bar::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--gold-dim),transparent);opacity:0;transition:opacity .3s;}
+.cred-bar:hover::before{opacity:1;}
+.cred-years{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.6rem;color:var(--gold);line-height:1;
+  min-width:60px;
+}
+.cred-yrs-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-top:.1rem;}
+.cred-info{}
+.cred-domain{font-size:.95rem;font-weight:500;color:var(--ice);letter-spacing:.02em;}
+.cred-sub{font-size:.78rem;color:var(--muted);margin-top:.15rem;letter-spacing:.04em;}
+
+.hero-desc{
+  font-size:1.05rem;font-weight:300;
+  color:var(--muted);line-height:1.75;
+  max-width:540px;margin-bottom:2.5rem;
+  animation:up .9s .7s both;
+}
+
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:up .9s .85s both;}
+
+.btn-g{
+  padding:.95rem 2.2rem;
+  background:linear-gradient(135deg,#b8922e,var(--gold2));
+  color:var(--void);border:none;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:.95rem;letter-spacing:.16em;
+  cursor:pointer;transition:all .3s;
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(138,101,32,.28);}
+.btn-o{
+  padding:.95rem 2.2rem;
+  background:transparent;color:var(--ice);
+  border:1px solid rgba(232,234,242,.18);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:.95rem;letter-spacing:.16em;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.btn-o:hover{border-color:var(--gold);color:var(--gold);}
+
+/* PROFILE CARD */
+.profile-card{
+  background:#fff;
+  border:1px solid var(--gold-border);
+  padding:2.5rem;
+  position:relative;overflow:hidden;
+  animation:up .9s .6s both;
+  box-shadow:0 8px 40px rgba(138,101,32,.1);
+}
+.profile-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.profile-initials{
+  width:80px;height:80px;
+  background:linear-gradient(135deg,#8a6520,var(--gold));
+  border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:2rem;
+  color:var(--void);margin-bottom:1.5rem;
+  box-shadow:0 8px 30px rgba(138,101,32,.25);
+}
+.profile-fullname{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;margin-bottom:.3rem;}
+.profile-role{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--gold-border);border:1px solid var(--gold-border);margin-bottom:1.5rem;}
+.ps-item{background:#fff;padding:.9rem;text-align:center;}
+.ps-num{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold);line-height:1;}
+.ps-lbl{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.2rem;}
+.profile-domains{display:flex;flex-wrap:wrap;gap:.4rem;}
+.pd-tag{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border:1px solid var(--gold-border);color:var(--gold);}
+
+@keyframes up{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══════ SECTION COMMONS ══════ */
+section{padding:8rem 4.5rem;}
+.sec-label{display:flex;align-items:center;gap:.8rem;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.sec-label::before{content:'◆';font-size:.45rem;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-.01em;}
+.sec-title em{font-style:italic;color:var(--gold);}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s,transform .7s;}
+.reveal.vis{opacity:1;transform:none;}
+
+/* ══════ ABOUT ══════ */
+#about{background:var(--deep);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;margin-top:4rem;}
+.about-left{}
+.about-quote{
+  font-family:'Playfair Display',serif;
+  font-size:1.45rem;font-style:italic;
+  color:var(--muted);line-height:1.7;
+  border-left:2px solid var(--gold);padding-left:2rem;
+  margin-bottom:2.5rem;
+}
+.about-body{font-size:1rem;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;}
+.about-right{}
+
+/* EXPERTISE TIMELINE */
+.exp-timeline{display:flex;flex-direction:column;gap:0;}
+.exp-item{
+  display:grid;grid-template-columns:80px 1fr;gap:1.5rem;
+  padding:2rem 0;border-bottom:1px solid var(--faint);
+  transition:padding-left .3s;cursor:default;
+}
+.exp-item:hover{padding-left:.8rem;}
+.exp-item:last-child{border:none;}
+.exp-yr{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.2rem;color:rgba(138,101,32,.35);line-height:1;
+  transition:color .3s;
+}
+.exp-item:hover .exp-yr{color:var(--gold);}
+.exp-content{}
+.exp-domain{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.exp-title{font-size:1rem;font-weight:500;margin-bottom:.4rem;}
+.exp-desc{font-size:.88rem;color:var(--muted);line-height:1.65;}
+
+/* ══════ EXPERTISE ══════ */
+#expertise{background:var(--void);}
+.expertise-hex{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gold-border);border:1px solid var(--gold-border);margin-top:4rem;box-shadow:0 4px 30px rgba(138,101,32,.08);}
+.hex-card{
+  background:#fff;padding:3rem 2.5rem;
+  transition:background .4s;cursor:pointer;position:relative;overflow:hidden;
+  box-shadow:inset 0 0 0 0 var(--gold-dim);
+}
+.hex-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s;transform-origin:center;}
+.hex-card:hover{background:rgba(138,101,32,.04);}
+.hex-card:hover::after{transform:scaleX(1);}
+.hex-num{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:rgba(138,101,32,.06);line-height:1;position:absolute;top:.5rem;right:1rem;}
+.hex-icon{font-size:2rem;margin-bottom:1.2rem;}
+.hex-domain{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;}
+.hex-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:.8rem;line-height:1.3;}
+.hex-desc{font-size:.88rem;color:var(--muted);line-height:1.7;}
+.hex-yrs{margin-top:1.5rem;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gold);letter-spacing:.1em;}
+
+/* ══════ CONSULTING ══════ */
+#consulting{background:var(--deep);}
+.consulting-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:start;margin-top:4rem;}
+.services-stack{display:flex;flex-direction:column;gap:0;}
+.svc{
+  padding:1.8rem 0;border-bottom:1px solid var(--faint);
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:all .3s;
+}
+.svc:hover{padding-left:1rem;}
+.svc-left{}
+.svc-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;transition:color .3s;}
+.svc:hover .svc-name{color:var(--gold);}
+.svc-note{font-size:.8rem;color:var(--muted);margin-top:.2rem;}
+.svc-right{display:flex;align-items:center;gap:1rem;}
+.svc-tag{font-size:.65rem;letter-spacing:.1em;padding:.2rem .7rem;border:1px solid var(--gold-border);color:var(--gold);text-transform:uppercase;}
+.svc-arr{color:var(--gold);opacity:0;transition:opacity .3s;font-size:1.1rem;}
+.svc:hover .svc-arr{opacity:1;}
+
+.pricing-panel{background:#fff;border:1px solid var(--gold-border);padding:2.5rem;position:relative;box-shadow:0 4px 24px rgba(138,101,32,.08);}
+.pricing-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.pp-title{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.price-row{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid var(--faint);}
+.price-row:last-of-type{border:none;}
+.pr-name{font-size:.95rem;font-weight:400;}
+.pr-val{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold);}
+
+.booking-form-mini{margin-top:2rem;background:var(--deep);border:1px solid var(--gold-border);padding:2rem;}
+.bfm-title{font-size:.85rem;font-weight:500;margin-bottom:1.2rem;letter-spacing:.04em;}
+.fi{width:100%;padding:.75rem 1rem;background:#fff;border:1px solid var(--gold-border);color:var(--ice);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;margin-bottom:.8rem;cursor:none;}
+.fi:focus{border-color:var(--gold);}
+.fi::placeholder{color:rgba(26,20,8,.3);}
+select.fi option{background:#fff;}
+.btn-book-now{width:100%;padding:.85rem;background:linear-gradient(135deg,#b8922e,var(--gold2));color:var(--void);border:none;font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.16em;cursor:pointer;transition:all .3s;}
+.btn-book-now:hover{opacity:.85;transform:translateY(-1px);}
+.book-success{display:none;text-align:center;padding:1.5rem;background:var(--deep);}
+.book-success.show{display:block;animation:up .4s ease;}
+.book-success p{font-size:.9rem;color:var(--muted);margin-top:.5rem;}
+
+/* ══════ ACADEMY ══════ */
+#academy{background:var(--void);}
+.academy-intro{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end;margin-bottom:5rem;}
+.academy-right-txt{font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--muted);line-height:1.75;border-left:2px solid var(--gold);padding-left:2rem;}
+
+.programs-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gold-border);border:1px solid var(--gold-border);}
+.prog-card{
+  background:#fff;padding:2.8rem 2.2rem;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  transition:background .4s;cursor:pointer;
+}
+.prog-card:hover{background:rgba(138,101,32,.04);}
+.prog-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s;}
+.prog-card:hover::before{transform:scaleX(1);}
+.prog-badge{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem;}
+.prog-badge::before{content:'';width:16px;height:1px;background:var(--gold);}
+.prog-icon{font-size:2.2rem;margin-bottom:1rem;}
+.prog-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;line-height:1.2;margin-bottom:.8rem;}
+.prog-desc{font-size:.88rem;color:var(--muted);line-height:1.7;flex:1;margin-bottom:2rem;}
+.prog-meta{border-top:1px solid var(--faint);padding-top:1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+.pm-row{display:flex;justify-content:space-between;font-size:.82rem;}
+.pm-row span:first-child{color:var(--muted);}
+.pm-row span:last-child{color:var(--gold);font-weight:500;}
+.prog-price{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--gold);margin-top:1.2rem;}
+.prog-price sup{font-size:1rem;vertical-align:super;}
+.prog-price small{font-size:.8rem;color:var(--muted);font-family:'Outfit',sans-serif;}
+.prog-btn{margin-top:1.2rem;width:100%;padding:.8rem;background:transparent;border:1px solid var(--gold-border);color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.12em;cursor:pointer;transition:all .3s;}
+.prog-btn:hover{background:var(--gold);color:var(--void);}
+
+/* COURSES */
+.courses-section{margin-top:5rem;}
+.courses-filter{display:flex;gap:.8rem;margin-bottom:2.5rem;flex-wrap:wrap;}
+.cf-btn{padding:.35rem 1.1rem;border:1px solid var(--gold-border);background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+.cf-btn.on,.cf-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim);}
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.c-card{border:1px solid var(--gold-border);background:#fff;overflow:hidden;transition:all .4s;cursor:pointer;display:flex;flex-direction:column;}
+.c-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 20px 50px rgba(138,101,32,.12);}
+.c-head{padding:2rem;border-bottom:1px solid var(--faint);position:relative;min-height:140px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--deep);}
+.c-bg{position:absolute;top:.5rem;right:1rem;font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(138,101,32,.05);line-height:1;}
+.c-domain{font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;}
+.c-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;line-height:1.3;}
+.c-card:hover .c-title{color:var(--gold);}
+.c-body{padding:1.5rem 2rem;flex:1;}
+.c-desc{font-size:.87rem;color:var(--muted);line-height:1.65;margin-bottom:1.2rem;}
+.c-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.c-tag{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.18rem .55rem;border:1px solid var(--faint);color:var(--muted);}
+.c-foot{padding:1.2rem 2rem;border-top:1px solid var(--faint);display:flex;align-items:center;justify-content:space-between;}
+.c-price{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold);}
+.c-btn{padding:.35rem 1rem;background:transparent;border:1px solid var(--faint);color:var(--gold);font-family:'Outfit',sans-serif;font-size:.8rem;cursor:pointer;transition:all .3s;}
+.c-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--void);}
+
+/* ══════ CERTIFICATION ══════ */
+#certification{background:var(--deep);}
+.cert-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:4rem;}
+.cert-doc{
+  background:linear-gradient(145deg,#fffef8,#fdf8ec,#fffef8);
+  border:1px solid var(--gold);padding:3rem 2.8rem;
+  position:relative;text-align:center;
+  box-shadow:0 0 80px rgba(138,101,32,.1),inset 0 0 80px rgba(138,101,32,.02);
+}
+.cert-doc::before,.cert-doc::after{content:'';position:absolute;border:1px solid rgba(138,101,32,.18);}
+.cert-doc::before{inset:10px;}
+.cert-doc::after{inset:18px;border-style:dashed;opacity:.3;}
+.cc{position:absolute;width:28px;height:28px;border-color:var(--gold);border-style:solid;border-width:0;}
+.cc.tl{top:5px;left:5px;border-top-width:2px;border-left-width:2px;}
+.cc.tr{top:5px;right:5px;border-top-width:2px;border-right-width:2px;}
+.cc.bl{bottom:5px;left:5px;border-bottom-width:2px;border-left-width:2px;}
+.cc.br{bottom:5px;right:5px;border-bottom-width:2px;border-right-width:2px;}
+.cert-seal{width:68px;height:68px;border-radius:50%;border:2px solid var(--gold);background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:1.8rem;box-shadow:0 0 25px rgba(138,101,32,.2);position:relative;z-index:1;}
+.cert-inst{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;position:relative;z-index:1;}
+.cert-presents{font-family:'Playfair Display',serif;font-size:.9rem;font-style:italic;color:var(--muted);position:relative;z-index:1;}
+.cert-recipient-name{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;letter-spacing:.04em;margin:.5rem 0;position:relative;z-index:1;}
+.cert-completed{font-family:'Playfair Display',serif;font-size:.9rem;font-style:italic;color:var(--muted);position:relative;z-index:1;}
+.cert-hr{width:50%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1rem auto;position:relative;z-index:1;}
+.cert-of-word{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.2em;color:var(--gold);position:relative;z-index:1;}
+.cert-prog-name{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:.4rem 0 1.5rem;position:relative;z-index:1;}
+.cert-footer{display:flex;justify-content:space-between;position:relative;z-index:1;margin-top:1.5rem;}
+.cf-item small{display:block;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.cf-item span{font-family:'Playfair Display',serif;font-size:.85rem;color:var(--gold);}
+.cert-wax{position:absolute;bottom:2rem;right:2rem;width:52px;height:52px;border-radius:50%;border:2px solid var(--gold);background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.3rem;z-index:2;box-shadow:0 0 18px rgba(138,101,32,.15);}
+
+.cert-features{display:flex;flex-direction:column;gap:1.5rem;}
+.cff{display:flex;gap:1.5rem;align-items:flex-start;padding:1.5rem;border:1px solid var(--faint);background:#fff;transition:border-color .3s;}
+.cff:hover{border-color:var(--gold);}
+.cff-icon{width:42px;height:42px;min-width:42px;border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;background:var(--gold-dim);}
+.cff-text h4{font-size:1rem;font-weight:600;margin-bottom:.3rem;}
+.cff-text p{font-size:.87rem;color:var(--muted);line-height:1.6;}
+
+/* ══════ MENTORSHIP ══════ */
+#mentorship{background:var(--void);}
+.mentorship-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:5rem;margin-top:4rem;}
+.mentor-profile{background:#fff;border:1px solid var(--gold-border);padding:3rem;position:relative;overflow:hidden;}
+.mentor-profile::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.mp-header{display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem;}
+.mp-av{width:72px;height:72px;border-radius:2px;background:linear-gradient(135deg,#7a5515,var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--void);flex-shrink:0;box-shadow:0 8px 24px rgba(138,101,32,.2);}
+.mp-info h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;}
+.mp-info p{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-top:.3rem;}
+.mp-quote{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--muted);line-height:1.7;border-left:2px solid var(--gold);padding-left:1.5rem;margin-bottom:2rem;}
+.mp-creds{display:flex;flex-direction:column;gap:.6rem;margin-bottom:2rem;}
+.mp-cred{display:flex;align-items:center;gap:.8rem;font-size:.87rem;}
+.mp-cred-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.mp-cred span{color:var(--muted);}
+.mp-cred strong{color:var(--gold);}
+.mentor-slots{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem;}
+.ms{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;background:var(--deep);border:1px solid var(--faint);transition:border-color .3s;}
+.ms:hover{border-color:var(--gold);}
+.ms-left{display:flex;align-items:center;gap:.8rem;}
+.ms-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);}
+.ms-name{font-size:.9rem;}
+.ms-price{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold);}
+.btn-apply-mentor{width:100%;padding:1rem;background:linear-gradient(135deg,#b8922e,var(--gold2));color:var(--void);border:none;font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.16em;cursor:pointer;transition:all .3s;}
+.btn-apply-mentor:hover{opacity:.85;transform:translateY(-2px);box-shadow:0 12px 30px rgba(138,101,32,.25);}
+
+.mentor-steps{display:flex;flex-direction:column;}
+.m-step{display:flex;gap:1.5rem;padding:1.8rem 0;border-bottom:1px solid rgba(138,101,32,.1);}
+.m-step:last-child{border:none;}
+.m-step-n{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:rgba(138,101,32,.25);line-height:1;min-width:40px;}
+.m-step-t h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.3rem;}
+.m-step-t p{font-size:.87rem;color:var(--muted);line-height:1.6;}
+
+/* ══════ WORKSHOPS ══════ */
+#workshops{background:var(--deep);}
+.wshop-list{margin-top:4rem;display:flex;flex-direction:column;}
+.wshop-row{background:#fff;
+  display:grid;grid-template-columns:160px 1fr auto;
+  gap:3rem;padding:2.5rem 0;border-bottom:1px solid rgba(138,101,32,.1);
+  align-items:center;cursor:pointer;
+  transition:padding-left .3s;position:relative;
+}
+.wshop-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold);transform:scaleY(0);transition:transform .3s;transform-origin:top;}
+.wshop-row:hover{padding-left:1.5rem;}
+.wshop-row:hover::before{transform:scaleY(1);}
+.wr-date{text-align:center;}
+.wr-mon{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gold);letter-spacing:.12em;}
+.wr-day{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--gold);line-height:1;}
+.wr-yr{font-size:.7rem;color:var(--muted);letter-spacing:.08em;}
+.wr-info{}
+.wr-type{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.wr-title{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;margin-bottom:.5rem;transition:color .3s;}
+.wshop-row:hover .wr-title{color:var(--gold);}
+.wr-desc{font-size:.88rem;color:var(--muted);line-height:1.6;}
+.wr-tags{display:flex;gap:.4rem;margin-top:.8rem;flex-wrap:wrap;}
+.wr-tag{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .5rem;border:1px solid var(--faint);color:var(--muted);}
+.wr-act{text-align:right;white-space:nowrap;}
+.wr-price{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--gold);}
+.wr-spots{font-size:.72rem;color:var(--gold);margin:.4rem 0 .8rem;letter-spacing:.06em;}
+.wr-btn{padding:.55rem 1.3rem;background:transparent;border:1px solid var(--gold-border);color:var(--gold);font-family:'Outfit',sans-serif;font-size:.82rem;cursor:pointer;transition:all .3s;}
+.wr-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--void);}
+
+/* ══════ INSIGHTS ══════ */
+#insights{background:var(--void);}
+.insights-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:1px;background:var(--gold-border);border:1px solid var(--gold-border);margin-top:4rem;box-shadow:0 4px 30px rgba(138,101,32,.06);}
+.blog-card{background:#fff;padding:2.5rem;cursor:pointer;transition:background .4s;display:flex;flex-direction:column;}
+.blog-card:hover{background:rgba(138,101,32,.04);}
+.blog-card.feat{grid-row:span 2;justify-content:flex-end;min-height:380px;position:relative;overflow:hidden;}
+.bc-dom{font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+.bc-dom::before{content:'';width:14px;height:1px;background:var(--gold);}
+.bc-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;line-height:1.3;margin-bottom:.7rem;transition:color .3s;}
+.blog-card.feat .bc-title{font-size:1.55rem;}
+.blog-card:hover .bc-title{color:var(--gold);}
+.bc-exc{font-size:.87rem;color:var(--muted);line-height:1.6;margin-bottom:1.5rem;}
+.bc-meta{font-size:.75rem;color:rgba(232,234,242,.3);display:flex;gap:1rem;}
+
+/* ══════ TRUST ══════ */
+#trust{background:var(--deep);}
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--gold-border);border:1px solid var(--gold-border);margin-top:3rem;}
+.stat-box{background:#fff;padding:2rem;text-align:center;}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold);line-height:1;letter-spacing:.04em;}
+.stat-l{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:.4rem;}
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+.testi{padding:2rem;border:1px solid var(--gold-border);background:#fff;box-shadow:0 4px 20px rgba(138,101,32,0.06);}
+.t-stars{color:var(--gold);font-size:.75rem;letter-spacing:.12em;margin-bottom:.8rem;}
+.t-q{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:1.2rem;}
+.t-auth{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+.t-role{font-size:.75rem;color:rgba(232,234,242,.3);margin-top:.2rem;}
+
+/* ══════ MODAL ══════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);z-index:8000;display:none;align-items:center;justify-content:center;padding:2rem;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff;border:1px solid var(--gold-border);width:100%;max-width:580px;max-height:90vh;overflow-y:auto;position:relative;animation:up .35s ease;}
+.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.modal-head{padding:2rem 2.5rem;border-bottom:1px solid var(--faint);display:flex;justify-content:space-between;align-items:flex-start;}
+.modal-head h3{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;}
+.modal-head p{font-size:.82rem;color:var(--gold);margin-top:.3rem;letter-spacing:.06em;}
+.modal-x{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;transition:color .3s;}
+.modal-x:hover{color:var(--gold);}
+.modal-body-inner{padding:2rem 2.5rem;}
+.mrow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.mfg{margin-bottom:1rem;}
+.mfg label{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
+.mfg input,.mfg select,.mfg textarea{width:100%;padding:.75rem 1rem;background:#fff;border:1px solid var(--gold-border);color:var(--ice);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;cursor:none;}
+.mfg input:focus,.mfg select:focus,.mfg textarea:focus{border-color:var(--gold);}
+.mfg select option{background:#fff;}
+.mfg textarea{height:85px;resize:none;}
+.modal-foot{padding:0 2.5rem 2.5rem;}
+.modal-submit{width:100%;padding:1rem;background:linear-gradient(135deg,#b8922e,var(--gold2));color:var(--void);border:none;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.18em;cursor:pointer;transition:all .3s;}
+.modal-submit:hover{opacity:.85;}
+.modal-success{padding:3rem 2.5rem;text-align:center;display:none;}
+.modal-success.show{display:block;animation:up .5s ease;}
+.modal-success .si{font-size:3rem;margin-bottom:1rem;}
+.modal-success h3{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:.6rem;}
+.modal-success p{font-size:.95rem;color:var(--muted);line-height:1.7;}
+
+/* ══════ FOOTER ══════ */
+footer{background:var(--deep);border-top:1px solid var(--gold-border);padding:5rem 4.5rem 2.5rem;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem;}
+.fb .brand-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold);letter-spacing:.15em;display:block;margin-bottom:.3rem;}
+.fb .brand-founder{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+.fb p{font-size:.9rem;color:var(--muted);line-height:1.75;max-width:300px;}
+.fc h5{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
+.fc ul li a{font-size:.9rem;color:var(--muted);text-decoration:none;transition:color .3s;}
+.fc ul li a:hover{color:var(--gold);}
+.foot-bottom{padding-top:2rem;border-top:1px solid rgba(138,101,32,.12);display:flex;justify-content:space-between;align-items:center;}
+.foot-bottom p{font-size:.78rem;color:rgba(232,234,242,.22);}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  nav{padding:1.1rem 2.5rem;}
+  section{padding:6rem 2.5rem;}
+  #hero{padding:7rem 2.5rem 4rem;}
+  .hero-inner{grid-template-columns:1fr;gap:3rem;}
+  .profile-card{max-width:420px;}
+  .about-grid,.consulting-layout,.cert-layout,.mentorship-layout,.academy-intro{grid-template-columns:1fr;gap:3rem;}
+  .expertise-hex,.programs-row,.courses-grid{grid-template-columns:1fr 1fr;}
+  .insights-grid{grid-template-columns:1fr 1fr;}
+  .blog-card.feat{grid-column:span 2;}
+  .stats-row{grid-template-columns:repeat(3,1fr);}
+  .testimonials{grid-template-columns:1fr 1fr;}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .wshop-row{background:#fff;grid-template-columns:120px 1fr;}
+  .wr-act{grid-column:2;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .burger{display:flex;}
+  .hero-name{font-size:3.2rem;}
+  .expertise-hex,.programs-row,.courses-grid,.stats-row,.testimonials{grid-template-columns:1fr;}
+  .insights-grid{grid-template-columns:1fr;}
+  .blog-card.feat{grid-column:1;}
+  .foot-grid{grid-template-columns:1fr;}
+  .mrow{grid-template-columns:1fr;}
+  .wshop-row{background:#fff;grid-template-columns:1fr;gap:1rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="CUR"><div class="d"></div></div>
+<div id="CUR2"><div class="r" style="position:fixed;pointer-events:none;z-index:9998;"></div></div>
+
+<!-- MOBILE NAV -->
+<div class="mobnav" id="mobnav">
+  <button class="mobnav-x" onclick="closeMob()">✕</button>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#expertise" onclick="closeMob()">Expertise</a>
+  <a href="#consulting" onclick="closeMob()">Consulting</a>
+  <a href="#academy" onclick="closeMob()">Academy</a>
+  <a href="#certification" onclick="closeMob()">Certifications</a>
+  <a href="#mentorship" onclick="closeMob()">Mentorship</a>
+  <a href="#workshops" onclick="closeMob()">Workshops</a>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="mainModal">
+  <div class="modal-box">
+    <div class="modal-head" id="mHead">
+      <div><h3 id="mTitle">Enroll</h3><p id="mSub">Complete your application</p></div>
+      <button class="modal-x" onclick="closeModal()">✕</button>
+    </div>
+    <div id="mFormWrap">
+      <div class="modal-body-inner">
+        <div class="mrow">
+          <div class="mfg"><label>First Name</label><input type="text" placeholder="First name"></div>
+          <div class="mfg"><label>Last Name</label><input type="text" placeholder="Last name"></div>
+        </div>
+        <div class="mfg"><label>Email Address</label><input type="email" placeholder="your@email.com"></div>
+        <div class="mfg"><label>Organisation</label><input type="text" placeholder="Company / Institution (optional)"></div>
+        <div class="mrow">
+          <div class="mfg"><label>Country</label>
+            <select><option>India</option><option>USA</option><option>UK</option><option>UAE</option><option>Singapore</option><option>Other</option></select>
+          </div>
+          <div class="mfg"><label>Background</label>
+            <select><option>Finance / Banking</option><option>Legal</option><option>Government / Policy</option><option>Technology / AI</option><option>Corporate Executive</option><option>Academic</option><option>Other</option></select>
+          </div>
+        </div>
+        <div class="mfg"><label>Statement of Intent</label><textarea placeholder="Why do you want to engage with The Sovereign Mind?"></textarea></div>
+        <div class="mfg"><label>LinkedIn URL</label><input type="url" placeholder="https://linkedin.com/in/yourprofile"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="modal-submit" onclick="submitModal()">SUBMIT APPLICATION →</button>
+      </div>
+    </div>
+    <div class="modal-success" id="mSuccess">
+      <div class="si">🎓</div>
+      <h3>Application Received</h3>
+      <p>Thank you for reaching out to The Sovereign Mind. Naveen Thella's office will review your application and respond within 24 hours with next steps.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <!-- nav-brand replaced -->
+  <!--
+    <span class="nav-brand-name">THE SOVEREIGN MIND</span>
+    <span class="nav-brand-sub">Naveen Thella — Founder & Principal</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#consulting">Consulting</a></li>
+    <li><a href="#academy">Academy</a></li>
+    <li><a href="#certification">Certify</a></li>
+    <li><a href="#workshops">Workshops</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal('Connect with Naveen Thella','Book a consultation or enroll in a program')">Engage Now</a></li>
+  </ul>
+  <div class="burger" id="burger" onclick="openMob()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow-r"></div>
+  <div class="hero-glow-l"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-bar"></div>
+        <span class="eyebrow-txt">Founder · The Sovereign Mind Institute</span>
+      </div>
+      <h1 class="hero-name">
+        <span class="first">NAVEEN</span><br>
+        <span class="last">THELLA</span>
+      </h1>
+      <div class="hero-title-line">Multi-Disciplinary Expert · Consultant · Educator</div>
+
+      <div class="cred-bars">
+        <div class="cred-bar">
+          <div class="cred-years">10<span class="cred-yrs-label">Years</span></div>
+          <div class="cred-info">
+            <div class="cred-domain">AI / Machine Learning</div>
+            <div class="cred-sub">Deep expertise in AI systems, ML architectures, and intelligent automation at scale</div>
+          </div>
+        </div>
+        <div class="cred-bar">
+          <div class="cred-years">10<span class="cred-yrs-label">Years</span></div>
+          <div class="cred-info">
+            <div class="cred-domain">Finance & Capital Markets</div>
+            <div class="cred-sub">Investment analysis, financial modelling, capital allocation and market strategy</div>
+          </div>
+        </div>
+        <div class="cred-bar">
+          <div class="cred-years">7<span class="cred-yrs-label">Years</span></div>
+          <div class="cred-info">
+            <div class="cred-domain">Civil Services & Governance</div>
+            <div class="cred-sub">Rigorous preparation in constitutional law, public policy, ethics, and governance systems</div>
+          </div>
+        </div>
+        <div class="cred-bar">
+          <div class="cred-years">∞<span class="cred-yrs-label">Depth</span></div>
+          <div class="cred-info">
+            <div class="cred-domain">Economics, Law, Philosophy, Psychology & Geopolitics</div>
+            <div class="cred-sub">Practitioner-grade knowledge across disciplines that shape the world's most complex decisions</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="hero-desc">
+        Where artificial intelligence meets constitutional governance, where financial models intersect with philosophical ethics, and where geopolitical realities inform economic strategy — that is Naveen Thella's domain.
+      </p>
+
+      <div class="hero-btns">
+        <a href="#consulting" class="btn-g">Book a Consultation →</a>
+        <a href="#academy" class="btn-o">Explore Academy</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="profile-card">
+        <div class="profile-initials" style="width:100px;height:100px;background:linear-gradient(135deg,#f0ede4,#fff);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;border-radius:2px;">
+  <svg width="72" height="80" viewBox="140 60 400 210" xmlns="http://www.w3.org/2000/svg">
+    <path d="M336,148 C320,136 284,110 248,100 C212,90 180,96 164,112 C148,128 148,156 160,176 C172,196 196,208 220,214 C244,220 272,218 292,210 C312,202 330,186 336,168" fill="none" stroke="#0d0b07" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M344,148 C360,136 396,110 432,100 C468,90 500,96 516,112 C532,128 532,156 520,176 C508,196 484,208 460,214 C436,220 408,218 388,210 C368,202 350,186 344,168" fill="none" stroke="#0d0b07" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M336,190 C320,196 292,208 264,220 C236,232 212,242 196,256 C180,270 178,286 188,298 C198,310 220,314 244,310 C268,306 292,294 310,280 C328,266 338,248 338,228" fill="none" stroke="#0d0b07" stroke-width="2" stroke-linecap="round"/>
+    <path d="M344,190 C360,196 388,208 416,220 C444,232 468,242 484,256 C500,270 502,286 492,298 C482,310 460,314 436,310 C412,306 388,294 370,280 C352,266 342,248 342,228" fill="none" stroke="#0d0b07" stroke-width="2" stroke-linecap="round"/>
+    <path d="M336,155 C310,140 272,116 240,104" fill="none" stroke="#8a6520" stroke-width="1.8"/>
+    <path d="M334,162 C306,154 270,148 240,152 C218,155 196,164 176,172" fill="none" stroke="#8a6520" stroke-width="1.4"/>
+    <path d="M334,198 C312,210 284,224 260,234 C240,242 222,252 208,264" fill="none" stroke="#8a6520" stroke-width="1.4"/>
+    <path d="M344,155 C370,140 408,116 440,104" fill="none" stroke="#8a6520" stroke-width="1.8"/>
+    <path d="M346,162 C374,154 410,148 440,152 C462,155 484,164 504,172" fill="none" stroke="#8a6520" stroke-width="1.4"/>
+    <path d="M346,198 C368,210 396,224 420,234 C440,242 458,252 472,264" fill="none" stroke="#8a6520" stroke-width="1.4"/>
+    <circle cx="285" cy="126" r="5" fill="#8a6520"/>
+    <circle cx="240" cy="152" r="5" fill="#8a6520"/>
+    <circle cx="268" cy="228" r="5" fill="#8a6520"/>
+    <circle cx="395" cy="126" r="5" fill="#8a6520"/>
+    <circle cx="440" cy="152" r="5" fill="#8a6520"/>
+    <circle cx="412" cy="228" r="5" fill="#8a6520"/>
+    <path d="M335,121 C333,132 332,142 333,155 C334,164 336,170 340,172 C344,170 346,164 347,155 C348,142 347,132 345,121 Z" fill="rgba(13,11,7,0.05)" stroke="#0d0b07" stroke-width="1.8"/>
+    <path d="M335,172 C333,182 332,196 333,212 C334,224 337,234 340,240 C343,234 346,224 347,212 C348,196 347,182 345,172 Z" fill="rgba(13,11,7,0.05)" stroke="#0d0b07" stroke-width="1.8"/>
+    <circle cx="340" cy="114" r="8" fill="none" stroke="#0d0b07" stroke-width="2"/>
+    <circle cx="340" cy="114" r="3.5" fill="#8a6520"/>
+    <path d="M337,107 C328,94 316,82 308,72" fill="none" stroke="#0d0b07" stroke-width="1.5"/>
+    <path d="M343,107 C352,94 364,82 372,72" fill="none" stroke="#0d0b07" stroke-width="1.5"/>
+    <circle cx="308" cy="72" r="5" fill="#8a6520"/>
+    <circle cx="372" cy="72" r="5" fill="#8a6520"/>
+  </svg>
+</div>
+        <div class="profile-fullname">Naveen Thella</div>
+        <div class="profile-role">Founder · The Sovereign Mind</div>
+        <div class="profile-stats">
+          <div class="ps-item"><div class="ps-num">27+</div><div class="ps-lbl">Years Combined</div></div>
+          <div class="ps-item"><div class="ps-num">8</div><div class="ps-lbl">Disciplines</div></div>
+          <div class="ps-item"><div class="ps-num">500+</div><div class="ps-lbl">Clients & Alumni</div></div>
+          <div class="ps-item"><div class="ps-num">40+</div><div class="ps-lbl">Countries</div></div>
+        </div>
+        <div class="profile-domains">
+          <span class="pd-tag">AI / ML</span>
+          <span class="pd-tag">Finance</span>
+          <span class="pd-tag">Law</span>
+          <span class="pd-tag">Civil Services</span>
+          <span class="pd-tag">Economics</span>
+          <span class="pd-tag">Philosophy</span>
+          <span class="pd-tag">Psychology</span>
+          <span class="pd-tag">Geopolitics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="sec-label reveal">The Man Behind The Mind</div>
+  <h2 class="sec-title reveal">27 Years of <em>Uncompromising</em><br>Intellectual Pursuit</h2>
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <div class="about-quote">
+        "I don't believe expertise in one field is enough for the world we operate in. The most consequential decisions — in business, governance, and life — sit at the intersection of disciplines. That is where I live."
+        <br><br><span style="font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-style:normal;color:var(--gold);">— Naveen Thella</span>
+      </div>
+      <p class="about-body">Naveen Thella is a rare intellectual practitioner who has spent over two decades building genuine mastery across domains that rarely meet. His journey began with a decade in AI and Machine Learning — working on intelligent systems, predictive models, and the architecture of machine cognition long before the world caught up to its implications.</p>
+      <p class="about-body">In parallel, he built a decade of hands-on expertise in finance — from capital markets and investment strategy to corporate financial advisory and risk modelling. His seven years of rigorous civil services preparation instilled in him a constitutional, ethical, and governance-first lens on all matters of consequence.</p>
+      <p class="about-body">He is also a practitioner in economics, law, philosophy, psychology, and geopolitics — not as academic curiosities, but as living frameworks applied daily in client engagements, advisory work, and education.</p>
+    </div>
+    <div class="about-right reveal">
+      <div class="exp-timeline">
+        <div class="exp-item">
+          <div class="exp-yr">10</div>
+          <div class="exp-content">
+            <div class="exp-domain">Artificial Intelligence & Machine Learning</div>
+            <div class="exp-title">AI Systems Practitioner & Strategist</div>
+            <div class="exp-desc">Decade-long journey through ML architectures, NLP, data intelligence, AI ethics, and the strategic application of intelligent systems in finance, governance, and enterprise.</div>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-yr">10</div>
+          <div class="exp-content">
+            <div class="exp-domain">Finance & Capital Markets</div>
+            <div class="exp-title">Financial Practitioner & Strategic Advisor</div>
+            <div class="exp-desc">Investment analysis, valuation, portfolio strategy, financial modelling, and cross-border capital advisory across emerging and global markets.</div>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-yr">7</div>
+          <div class="exp-content">
+            <div class="exp-domain">Civil Services & Public Policy</div>
+            <div class="exp-title">Governance Expert & Constitutional Thinker</div>
+            <div class="exp-desc">Seven years immersed in constitutional law, public administration, ethics, economic policy, and the mechanics of how governance systems shape society.</div>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-yr">∞</div>
+          <div class="exp-content">
+            <div class="exp-domain">Economics · Law · Philosophy · Psychology · Geopolitics</div>
+            <div class="exp-title">Practitioner Across Disciplines</div>
+            <div class="exp-desc">Active practitioner and subject expert in economics, law, philosophy, psychology and international relations — applied in consulting, litigation strategy, behavioural advisory, and geopolitical analysis.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXPERTISE ══ -->
+<section id="expertise" style="background:var(--deep);">
+  <div class="sec-label reveal">Core Domains</div>
+  <h2 class="sec-title reveal">Eight Disciplines.<br><em>One Sovereign Mind.</em></h2>
+  <div class="expertise-hex reveal">
+    <div class="hex-card">
+      <div class="hex-num">01</div>
+      <div class="hex-icon">🤖</div>
+      <div class="hex-domain">Artificial Intelligence</div>
+      <div class="hex-title">AI / Machine Learning</div>
+      <div class="hex-desc">From ML system design and NLP to AI ethics, automation strategy, and the intersection of intelligent systems with finance and governance.</div>
+      <div class="hex-yrs">10 YEARS PRACTICE</div>
+    </div>
+    <div class="hex-card">
+      <div class="hex-num">02</div>
+      <div class="hex-icon">📈</div>
+      <div class="hex-domain">Finance</div>
+      <div class="hex-title">Capital Markets & Financial Strategy</div>
+      <div class="hex-desc">Investment analysis, financial modelling, corporate advisory, portfolio strategy, and cross-border capital allocation across global markets.</div>
+      <div class="hex-yrs">10 YEARS PRACTICE</div>
+    </div>
+    <div class="hex-card">
+      <div class="hex-num">03</div>
+      <div class="hex-icon">🏛️</div>
+      <div class="hex-domain">Civil Services & Governance</div>
+      <div class="hex-title">Constitutional Law & Public Policy</div>
+      <div class="hex-desc">Deep grounding in constitutional law, public administration, regulatory frameworks, and the ethics of governance — applied to corporate and public sector advisory.</div>
+      <div class="hex-yrs">7 YEARS PREPARATION</div>
+    </div>
+    <div class="hex-card">
+      <div class="hex-num">04</div>
+      <div class="hex-icon">📊</div>
+      <div class="hex-domain">Economics</div>
+      <div class="hex-title">Economics Practitioner</div>
+      <div class="hex-desc">Macro and microeconomic analysis, policy impact assessment, trade economics, and applied economic modelling for strategic decision-making.</div>
+      <div class="hex-yrs">PRACTITIONER</div>
+    </div>
+    <div class="hex-card">
+      <div class="hex-num">05</div>
+      <div class="hex-icon">⚖️</div>
+      <div class="hex-domain">Law</div>
+      <div class="hex-title">Legal Frameworks & Compliance</div>
+      <div class="hex-desc">Contract analysis, regulatory compliance, international law, corporate governance, and the legal architecture of cross-border transactions.</div>
+      <div class="hex-yrs">SUBJECT EXPERT</div>
+    </div>
+    <div class="hex-card">
+      <div class="hex-num">06</div>
+      <div class="hex-icon">💡</div>
+      <div class="hex-domain">Philosophy & Ethics</div>
+      <div class="hex-title">Applied Philosophy</div>
+      <div class="hex-desc">Ethical frameworks for complex decisions — from AI ethics to corporate governance. Stoicism, deontology, and virtue ethics applied in practice.</div>
+      <div class="hex-yrs">SUBJECT EXPERT</div>
+    </div>
+    <div class="hex-card">
+      <div class="hex-num">07</div>
+      <div class="hex-icon">🧠</div>
+      <div class="hex-domain">Psychology</div>
+      <div class="hex-title">Behavioural Science & Decision Psychology</div>
+      <div class="hex-desc">Cognitive biases, negotiation psychology, leadership behaviour, and applied behavioural science for executives and policymakers.</div>
+      <div class="hex-yrs">SUBJECT EXPERT</div>
+    </div>
+    <div class="hex-card">
+      <div class="hex-num">08</div>
+      <div class="hex-icon">🌍</div>
+      <div class="hex-domain">Geopolitics & IR</div>
+      <div class="hex-title">Global Power & International Relations</div>
+      <div class="hex-desc">Geopolitical risk analysis, international relations theory, regional conflict assessment, and strategic intelligence for investors and institutions.</div>
+      <div class="hex-yrs">SUBJECT EXPERT</div>
+    </div>
+    <div class="hex-card" style="background:rgba(138,101,32,.06);border-top:2px solid var(--gold);">
+      <div class="hex-icon">🔗</div>
+      <div class="hex-domain">The Synthesis</div>
+      <div class="hex-title">Cross-Disciplinary Intelligence</div>
+      <div class="hex-desc">Naveen's singular value: synthesising all eight domains into unified insight. This is what most advisors — constrained by a single discipline — simply cannot offer.</div>
+      <div class="hex-yrs" style="color:var(--gold2);">UNIQUE CAPABILITY</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONSULTING ══ -->
+<section id="consulting">
+  <div class="sec-label reveal">Advisory Services</div>
+  <h2 class="sec-title reveal">Work Directly with<br><em>Naveen Thella</em></h2>
+  <div class="consulting-layout">
+    <div class="reveal">
+      <div class="services-stack">
+        <div class="svc"><div class="svc-left"><div class="svc-name">AI Strategy & Digital Transformation</div><div class="svc-note">ML roadmaps, AI ethics, automation frameworks for enterprise</div></div><div class="svc-right"><span class="svc-tag">AI / Tech</span><span class="svc-arr">→</span></div></div>
+        <div class="svc"><div class="svc-left"><div class="svc-name">Financial Advisory & Due Diligence</div><div class="svc-note">Investment assessment, valuation, capital strategy, M&A</div></div><div class="svc-right"><span class="svc-tag">Finance</span><span class="svc-arr">→</span></div></div>
+        <div class="svc"><div class="svc-left"><div class="svc-name">Legal & Regulatory Navigation</div><div class="svc-note">Compliance review, contract analysis, cross-border frameworks</div></div><div class="svc-right"><span class="svc-tag">Law</span><span class="svc-arr">→</span></div></div>
+        <div class="svc"><div class="svc-left"><div class="svc-name">Economic Policy Analysis</div><div class="svc-note">Macro modelling, policy impact, trade & market economics</div></div><div class="svc-right"><span class="svc-tag">Economics</span><span class="svc-arr">→</span></div></div>
+        <div class="svc"><div class="svc-left"><div class="svc-name">Geopolitical Risk Briefings</div><div class="svc-note">Custom scenario analysis, regional risk, investment implications</div></div><div class="svc-right"><span class="svc-tag">Geo / IR</span><span class="svc-arr">→</span></div></div>
+        <div class="svc"><div class="svc-left"><div class="svc-name">Executive Coaching & Psychology</div><div class="svc-note">Behavioural frameworks, decision mastery, leadership development</div></div><div class="svc-right"><span class="svc-tag">Psychology</span><span class="svc-arr">→</span></div></div>
+        <div class="svc" style="border:none;"><div class="svc-left"><div class="svc-name">Governance & Public Policy Advisory</div><div class="svc-note">Constitutional review, public administration, policy design</div></div><div class="svc-right"><span class="svc-tag">Governance</span><span class="svc-arr">→</span></div></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="pricing-panel">
+        <div class="pp-title">Engagement Pricing</div>
+        <div class="price-row"><span class="pr-name">One-Time Discovery Session</span><span class="pr-val">$250</span></div>
+        <div class="price-row"><span class="pr-name">Deep-Dive Strategy Session</span><span class="pr-val">$500</span></div>
+        <div class="price-row"><span class="pr-name">Monthly Retainer</span><span class="pr-val">From $1,800</span></div>
+        <div class="price-row"><span class="pr-name">Project-Based Engagement</span><span class="pr-val">Custom</span></div>
+      </div>
+      <div class="booking-form-mini" style="margin-top:1.5rem;">
+        <div class="bfm-title">Request a Consultation with Naveen</div>
+        <div id="bookFormInner">
+          <input class="fi" type="text" placeholder="Your full name">
+          <input class="fi" type="email" placeholder="Email address">
+          <select class="fi">
+            <option value="">Select domain of interest</option>
+            <option>AI / Machine Learning</option>
+            <option>Finance & Capital Markets</option>
+            <option>Legal & Compliance</option>
+            <option>Economics & Policy</option>
+            <option>Geopolitics & IR</option>
+            <option>Psychology & Leadership</option>
+            <option>Governance & Civil Services</option>
+            <option>Cross-Domain Strategy</option>
+          </select>
+          <select class="fi">
+            <option value="">Preferred session type</option>
+            <option>Discovery ($250)</option>
+            <option>Deep Dive ($500)</option>
+            <option>Monthly Retainer</option>
+            <option>Project Engagement</option>
+          </select>
+          <button class="btn-book-now" onclick="submitBook()">BOOK SESSION WITH NAVEEN →</button>
+        </div>
+        <div class="book-success" id="bookSuccess">
+          <div style="font-size:2rem;margin-bottom:.5rem;">✅</div>
+          <strong style="color:var(--gold);">Request Received</strong>
+          <p>Naveen's office will confirm your session within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ACADEMY ══ -->
+<section id="academy" style="background:var(--deep);">
+  <div class="sec-label reveal">The Sovereign Mind Institute</div>
+  <h2 class="sec-title reveal">Train Under<br><em>Naveen Thella</em></h2>
+  <div class="academy-intro reveal">
+    <div></div>
+    <p class="academy-right-txt">Every program is built on lived, practitioner knowledge — not textbooks. Naveen Thella teaches from 27+ years of active engagement across AI, finance, governance, and the disciplines that shape how the world actually works.</p>
+  </div>
+
+  <div class="programs-row reveal">
+    <div class="prog-card">
+      <div class="prog-badge">Format 01</div>
+      <div class="prog-icon">🎓</div>
+      <div class="prog-name">Live Cohort Courses</div>
+      <p class="prog-desc">Structured 8–12 week programs delivered live. Weekly expert-led sessions, case studies drawn from Naveen's real engagements, peer cohort, and direct instructor access.</p>
+      <div class="prog-meta">
+        <div class="pm-row"><span>Duration</span><span>8–12 Weeks</span></div>
+        <div class="pm-row"><span>Cohort Size</span><span>Max 20</span></div>
+        <div class="pm-row"><span>Cert</span><span>Verified + Blockchain</span></div>
+      </div>
+      <div class="prog-price"><sup>$</sup>1,800 <small>/ person</small></div>
+      <button class="prog-btn" onclick="openModal('Live Cohort Course','8–12 Week Certified Program · $1,800')">Enroll in Next Cohort</button>
+    </div>
+    <div class="prog-card" style="border-top:2px solid var(--gold);box-shadow:0 8px 30px rgba(138,101,32,.12);">
+      <div class="prog-badge" style="color:var(--gold2);">Flagship · Format 02</div>
+      <div class="prog-icon">🤝</div>
+      <div class="prog-name">1:1 Mentorship with Naveen</div>
+      <p class="prog-desc">Direct mentorship from Naveen Thella himself. Bespoke development roadmap, monthly strategy sessions, on-demand access, curated reading lists tailored to your context.</p>
+      <div class="prog-meta">
+        <div class="pm-row"><span>Engagement</span><span>3–6 Months</span></div>
+        <div class="pm-row"><span>Sessions</span><span>4× Monthly</span></div>
+        <div class="pm-row"><span>Cert</span><span>All 4 Types</span></div>
+      </div>
+      <div class="prog-price"><sup>$</sup>3,500 <small>/ month</small></div>
+      <button class="prog-btn" style="background:var(--gold);color:var(--void);border-color:var(--gold);" onclick="openModal('1:1 Mentorship with Naveen Thella','Direct Private Mentorship · $3,500/month')">Apply for Mentorship</button>
+    </div>
+    <div class="prog-card">
+      <div class="prog-badge">Format 03</div>
+      <div class="prog-icon">⚡</div>
+      <div class="prog-name">Workshops & Masterclasses</div>
+      <p class="prog-desc">Intensive 1–3 day deep-dives on specific subjects. Maximum density, real frameworks, immediate practical application — designed for senior professionals with no time to waste.</p>
+      <div class="prog-meta">
+        <div class="pm-row"><span>Duration</span><span>1–3 Days</span></div>
+        <div class="pm-row"><span>Size</span><span>Max 40</span></div>
+        <div class="pm-row"><span>Cert</span><span>Digital + LinkedIn</span></div>
+      </div>
+      <div class="prog-price"><sup>$</sup>450 <small>/ session</small></div>
+      <button class="prog-btn" onclick="openModal('Workshop / Masterclass','Intensive Program · $450')">Register</button>
+    </div>
+  </div>
+
+  <!-- COURSES -->
+  <div class="courses-section reveal">
+    <div class="sec-label" style="margin-top:4rem;">Course Catalogue</div>
+    <h3 class="sec-title" style="font-size:2rem;margin-bottom:2rem;">All Courses</h3>
+    <div class="courses-filter">
+      <button class="cf-btn on" onclick="fCourse(this,'all')">All</button>
+      <button class="cf-btn" onclick="fCourse(this,'ai')">AI / ML</button>
+      <button class="cf-btn" onclick="fCourse(this,'finance')">Finance</button>
+      <button class="cf-btn" onclick="fCourse(this,'law')">Law</button>
+      <button class="cf-btn" onclick="fCourse(this,'economics')">Economics</button>
+      <button class="cf-btn" onclick="fCourse(this,'geo')">Geopolitics</button>
+      <button class="cf-btn" onclick="fCourse(this,'philosophy')">Philosophy</button>
+    </div>
+    <div class="courses-grid" id="cGrid">
+      <div class="c-card" data-d="ai"><div class="c-head"><div class="c-bg">01</div><div class="c-domain">AI / Machine Learning</div><div class="c-title">AI Strategy for Non-Technical Leaders</div></div><div class="c-body"><p class="c-desc">What every executive must understand about AI: architecture, risks, ethics, and how to build an AI-first strategy without being a data scientist.</p><div class="c-tags"><span class="c-tag">Cohort</span><span class="c-tag">8 Weeks</span></div></div><div class="c-foot"><div class="c-price">$1,800</div><button class="c-btn" onclick="openModal('AI Strategy for Non-Technical Leaders','Live Cohort · 8 Weeks · $1,800')">Enroll</button></div></div>
+
+      <div class="c-card" data-d="finance"><div class="c-head"><div class="c-bg">02</div><div class="c-domain">Finance</div><div class="c-title">Strategic Financial Intelligence for Senior Leaders</div></div><div class="c-body"><p class="c-desc">Capital allocation, valuation frameworks, investment decision-making and financial risk — distilled from Naveen's decade in capital markets.</p><div class="c-tags"><span class="c-tag">Cohort</span><span class="c-tag">10 Weeks</span></div></div><div class="c-foot"><div class="c-price">$1,800</div><button class="c-btn" onclick="openModal('Strategic Financial Intelligence','Live Cohort · 10 Weeks · $1,800')">Enroll</button></div></div>
+
+      <div class="c-card" data-d="law"><div class="c-head"><div class="c-bg">03</div><div class="c-domain">Law & Compliance</div><div class="c-title">Legal Frameworks for Global Business</div></div><div class="c-body"><p class="c-desc">International contracts, compliance architecture, dispute resolution, and corporate governance — grounded in Naveen's civil services and legal expertise.</p><div class="c-tags"><span class="c-tag">Cohort</span><span class="c-tag">8 Weeks</span></div></div><div class="c-foot"><div class="c-price">$1,800</div><button class="c-btn" onclick="openModal('Legal Frameworks for Global Business','Cohort · 8 Weeks · $1,800')">Enroll</button></div></div>
+
+      <div class="c-card" data-d="geo"><div class="c-head"><div class="c-bg">04</div><div class="c-domain">Geopolitics & IR</div><div class="c-title">Architecture of Global Power: 2025 Masterclass</div></div><div class="c-body"><p class="c-desc">Decode global power transitions, alliances, trade wars and regional conflicts through the systematic geopolitical lens Naveen applies in real advisory.</p><div class="c-tags"><span class="c-tag">Masterclass</span><span class="c-tag">2 Days</span></div></div><div class="c-foot"><div class="c-price">$450</div><button class="c-btn" onclick="openModal('Architecture of Global Power','Masterclass · 2 Days · $450')">Enroll</button></div></div>
+
+      <div class="c-card" data-d="economics"><div class="c-head"><div class="c-bg">05</div><div class="c-domain">Economics</div><div class="c-title">Applied Economics for Strategic Decision-Making</div></div><div class="c-body"><p class="c-desc">Macro and microeconomic frameworks used in real policy and investment decisions — taught by a practising economics expert and civil services scholar.</p><div class="c-tags"><span class="c-tag">Cohort</span><span class="c-tag">6 Weeks</span></div></div><div class="c-foot"><div class="c-price">$1,800</div><button class="c-btn" onclick="openModal('Applied Economics','Cohort · 6 Weeks · $1,800')">Enroll</button></div></div>
+
+      <div class="c-card" data-d="philosophy"><div class="c-head"><div class="c-bg">06</div><div class="c-domain">Philosophy & Ethics</div><div class="c-title">Applied Philosophy for Executives</div></div><div class="c-body"><p class="c-desc">Stoicism, Kantian ethics, utilitarian calculus reframed as practical tools for navigating complex ethical choices — including AI ethics and governance dilemmas.</p><div class="c-tags"><span class="c-tag">Masterclass</span><span class="c-tag">1 Day</span></div></div><div class="c-foot"><div class="c-price">$450</div><button class="c-btn" onclick="openModal('Applied Philosophy for Executives','Masterclass · 1 Day · $450')">Enroll</button></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CERTIFICATION ══ -->
+<section id="certification">
+  <div class="sec-label reveal">Credentials</div>
+  <h2 class="sec-title reveal">Certified by <em>Naveen Thella</em><br>& The Sovereign Mind</h2>
+  <div class="cert-layout">
+    <div class="cert-doc reveal">
+      <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+      <div class="cert-seal">🏛️</div>
+      <div class="cert-inst">The Sovereign Mind Institute · Naveen Thella</div>
+      <div class="cert-presents">This is to certify that</div>
+      <div class="cert-recipient-name">Alexandra Karim</div>
+      <div class="cert-completed">has successfully completed</div>
+      <div class="cert-hr"></div>
+      <div class="cert-of-word">Certificate of Excellence</div>
+      <div class="cert-prog-name">AI Strategy & Financial Intelligence — Cohort Program</div>
+      <div class="cert-hr"></div>
+      <div class="cert-footer">
+        <div class="cf-item"><small>Issued</small><span>March 2025</span></div>
+        <div class="cf-item"><small>Credential ID</small><span>TSM-NT-2025-0142</span></div>
+        <div class="cf-item"><small>Verified</small><span>Blockchain ✓</span></div>
+      </div>
+      <div class="cert-wax">🔏</div>
+    </div>
+    <div class="cert-features reveal">
+      <div class="cff"><div class="cff-icon">📄</div><div class="cff-text"><h4>Verified Digital Certificate (PDF)</h4><p>High-resolution PDF with unique credential ID, QR verification, and Naveen Thella's personal seal — issued upon successful completion.</p></div></div>
+      <div class="cff"><div class="cff-icon">⛓️</div><div class="cff-text"><h4>Blockchain-Verified Badge</h4><p>Each credential is permanently recorded on a public blockchain ledger — tamper-proof and instantly verifiable by any employer or institution worldwide.</p></div></div>
+      <div class="cff"><div class="cff-icon">💼</div><div class="cff-text"><h4>LinkedIn Shareable Credential</h4><p>One-click population to your LinkedIn profile under Licences & Certifications, with a verified link backed by The Sovereign Mind Institute.</p></div></div>
+      <div class="cff"><div class="cff-icon">🖨️</div><div class="cff-text"><h4>Printed Certificate</h4><p>Premium foil-embossed certificate on archival paper, bearing Naveen Thella's signature and the institute's official seal — delivered to your address.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MENTORSHIP ══ -->
+<section id="mentorship" style="background:var(--deep);">
+  <div class="sec-label reveal">1:1 With Naveen</div>
+  <h2 class="sec-title reveal">Direct Mentorship from<br><em>A Master Practitioner</em></h2>
+  <div class="mentorship-layout">
+    <div class="mentor-profile reveal">
+      <div class="mp-header">
+        <div class="mp-av">NT</div>
+        <div class="mp-info"><h3>Naveen Thella</h3><p>Principal Mentor & Founder</p></div>
+      </div>
+      <p class="mp-quote">"In 27 years, I've learned that the greatest insights emerge not within disciplines — but between them. My mentorship is not coaching. It is intellectual partnership at the highest level."</p>
+      <div class="mp-creds">
+        <div class="mp-cred"><div class="mp-cred-dot"></div><div><strong>10 years</strong> <span>AI / Machine Learning practice</span></div></div>
+        <div class="mp-cred"><div class="mp-cred-dot"></div><div><strong>10 years</strong> <span>Finance & capital markets</span></div></div>
+        <div class="mp-cred"><div class="mp-cred-dot"></div><div><strong>7 years</strong> <span>Civil services preparation & governance</span></div></div>
+        <div class="mp-cred"><div class="mp-cred-dot"></div><div><strong>Practitioner</strong> <span>Economics, law, philosophy, psychology, geopolitics</span></div></div>
+      </div>
+      <div class="mentor-slots">
+        <div class="ms"><div class="ms-left"><div class="ms-dot"></div><div class="ms-name">Single Strategy Session (90 min)</div></div><div class="ms-price">$950</div></div>
+        <div class="ms"><div class="ms-left"><div class="ms-dot"></div><div class="ms-name">3-Month Deep Mentorship</div></div><div class="ms-price">$9,500</div></div>
+        <div class="ms"><div class="ms-left"><div class="ms-dot"></div><div class="ms-name">6-Month Executive Track</div></div><div class="ms-price">$16,500</div></div>
+      </div>
+      <button class="btn-apply-mentor" onclick="openModal('Apply — 1:1 Mentorship with Naveen Thella','Select your preferred engagement track')">Apply for Direct Mentorship →</button>
+    </div>
+    <div class="reveal">
+      <div class="m-step"><div class="m-step-n">01</div><div class="m-step-t"><h4>Application & Assessment</h4><p>A brief written application and an introductory call to assess alignment between your goals and Naveen's capacity for high-quality engagement.</p></div></div>
+      <div class="m-step"><div class="m-step-n">02</div><div class="m-step-t"><h4>Bespoke Curriculum Design</h4><p>Naveen personally designs a development roadmap, reading list, and engagement structure calibrated entirely to your context, ambitions, and discipline.</p></div></div>
+      <div class="m-step"><div class="m-step-n">03</div><div class="m-step-t"><h4>Live Sessions & Async Access</h4><p>Regular 1:1 sessions plus between-session access for document review, questions, and real-time strategic input when you need it most.</p></div></div>
+      <div class="m-step"><div class="m-step-n">04</div><div class="m-step-t"><h4>Certification & Alumni Network</h4><p>All four certificate types on completion, plus permanent entry into The Sovereign Mind alumni community — a network of elite practitioners.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WORKSHOPS ══ -->
+<section id="workshops">
+  <div class="sec-label reveal">Upcoming Events</div>
+  <h2 class="sec-title reveal">Workshops &<br><em>Masterclasses</em></h2>
+  <div class="wshop-list reveal">
+    <div class="wshop-row">
+      <div class="wr-date"><div class="wr-mon">MAR</div><div class="wr-day">22</div><div class="wr-yr">2025</div></div>
+      <div class="wr-info"><div class="wr-type">Masterclass · 1 Day · Virtual</div><div class="wr-title">AI Ethics & Governance: The Framework Every Leader Needs</div><p class="wr-desc">Naveen draws on 10 years of AI practice and 7 years of civil services training to build a practical ethics framework for AI deployment in enterprise and government.</p><div class="wr-tags"><span class="wr-tag">AI/ML</span><span class="wr-tag">Ethics</span><span class="wr-tag">Governance</span></div></div>
+      <div class="wr-act"><div class="wr-price">$450</div><div class="wr-spots">8 spots left</div><button class="wr-btn" onclick="openModal('AI Ethics & Governance Masterclass','March 22 · 1 Day Virtual · $450')">Register →</button></div>
+    </div>
+    <div class="wshop-row">
+      <div class="wr-date"><div class="wr-mon">APR</div><div class="wr-day">05</div><div class="wr-yr">2025</div></div>
+      <div class="wr-info"><div class="wr-type">Workshop · 2 Days · Virtual</div><div class="wr-title">Geopolitical Risk Intelligence: Reading the World in 2025</div><p class="wr-desc">Intensive scenario analysis of the Indo-Pacific, Middle East, and Eurasian geopolitics — with direct strategic implications for investors, executives, and policymakers.</p><div class="wr-tags"><span class="wr-tag">Geopolitics</span><span class="wr-tag">IR</span><span class="wr-tag">Risk</span></div></div>
+      <div class="wr-act"><div class="wr-price">$450</div><div class="wr-spots">15 spots left</div><button class="wr-btn" onclick="openModal('Geopolitical Risk Intelligence','April 5 · 2 Days Virtual · $450')">Register →</button></div>
+    </div>
+    <div class="wshop-row">
+      <div class="wr-date"><div class="wr-mon">APR</div><div class="wr-day">19</div><div class="wr-yr">2025</div></div>
+      <div class="wr-info"><div class="wr-type">Workshop · 1 Day · Virtual</div><div class="wr-title">Finance × AI: Where Capital Meets Machine Intelligence</div><p class="wr-desc">A unique workshop combining Naveen's dual decade of expertise — how AI is restructuring capital markets, risk assessment, and investment decision-making right now.</p><div class="wr-tags"><span class="wr-tag">Finance</span><span class="wr-tag">AI/ML</span><span class="wr-tag">Markets</span></div></div>
+      <div class="wr-act"><div class="wr-price">$450</div><div class="wr-spots">20 spots</div><button class="wr-btn" onclick="openModal('Finance × AI Workshop','April 19 · 1 Day Virtual · $450')">Register →</button></div>
+    </div>
+    <div class="wshop-row">
+      <div class="wr-date"><div class="wr-mon">MAY</div><div class="wr-day">10</div><div class="wr-yr">2025</div></div>
+      <div class="wr-info"><div class="wr-type">Flagship · 3 Days · Hyderabad, India</div><div class="wr-title">The Sovereign Mind Intensive — Naveen Thella's Signature Program</div><p class="wr-desc">Three transformative days in Hyderabad. All 8 disciplines. Naveen Thella in the room. Limited to 15 participants. This is the most complete expression of The Sovereign Mind's philosophy.</p><div class="wr-tags"><span class="wr-tag">All Domains</span><span class="wr-tag">In-Person</span><span class="wr-tag">Flagship</span></div></div>
+      <div class="wr-act"><div class="wr-price">$2,200</div><div class="wr-spots" style="color:#e8b04b;">Only 5 spots</div><button class="wr-btn" style="border-color:var(--gold);" onclick="openModal('Sovereign Mind Intensive — Hyderabad','May 10–12 · In-Person · $2,200')">Register →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INSIGHTS ══ -->
+<section id="insights" style="background:var(--deep);">
+  <div class="sec-label reveal">Publications</div>
+  <h2 class="sec-title reveal">Insights & <em>Thought Leadership</em></h2>
+  <div class="insights-grid reveal">
+    <div class="blog-card feat">
+      <div class="bc-dom">Featured · AI & Economics</div>
+      <div class="bc-title">When Machine Intelligence Meets Economic Policy: What Governments Are Getting Wrong</div>
+      <div class="bc-exc">Drawing on 10 years in AI and deep economic practice, Naveen examines how governments are misapplying AI frameworks to policy — and what a sovereignty-first approach looks like.</div>
+      <div class="bc-meta"><span>March 2025</span><span>14 min read</span></div>
+    </div>
+    <div class="blog-card"><div class="bc-dom">Finance & Geopolitics</div><div class="bc-title">The New Multipolar Capital: Where Money Flows in a Fragmented World</div><div class="bc-exc">How the disintegration of Western financial hegemony is redirecting global capital — and what sophisticated investors must do differently.</div><div class="bc-meta"><span>Feb 2025</span><span>9 min</span></div></div>
+    <div class="blog-card"><div class="bc-dom">Civil Services & Governance</div><div class="bc-title">What Civil Services Preparation Teaches You That Business School Never Will</div><div class="bc-exc">Seven years of UPSC preparation builds a constitutional, ethical and systemic thinking capacity that no MBA can replicate.</div><div class="bc-meta"><span>Jan 2025</span><span>8 min</span></div></div>
+    <div class="blog-card"><div class="bc-dom">Psychology & Leadership</div><div class="bc-title">Cognitive Biases That Cost Executives Millions in Negotiation</div><div class="bc-exc">Applied behavioural science in high-stakes decision environments — anchoring, loss aversion, and attribution error dissected.</div><div class="bc-meta"><span>Dec 2024</span><span>6 min</span></div></div>
+    <div class="blog-card"><div class="bc-dom">Philosophy & AI</div><div class="bc-title">The Stoic Framework for AI Ethics: Ancient Wisdom for a Machine Age</div><div class="bc-exc">Naveen bridges his philosophy expertise with a decade in AI to construct a practical Stoic ethical framework for AI deployment.</div><div class="bc-meta"><span>Nov 2024</span><span>7 min</span></div></div>
+  </div>
+</section>
+
+<!-- ══ TRUST ══ -->
+<section id="trust">
+  <div class="sec-label reveal">Track Record</div>
+  <h2 class="sec-title reveal">The Results Speak<br><em>For Themselves</em></h2>
+  <div class="stats-row reveal">
+    <div class="stat-box"><div class="stat-n">27+</div><div class="stat-l">Years Combined Experience</div></div>
+    <div class="stat-box"><div class="stat-n">500+</div><div class="stat-l">Clients & Alumni</div></div>
+    <div class="stat-box"><div class="stat-n">8</div><div class="stat-l">Disciplines Mastered</div></div>
+    <div class="stat-box"><div class="stat-n">40+</div><div class="stat-l">Countries</div></div>
+    <div class="stat-box"><div class="stat-n">97%</div><div class="stat-l">Satisfaction Rate</div></div>
+  </div>
+  <div class="testimonials reveal">
+    <div class="testi"><div class="t-stars">★★★★★</div><p class="t-q">"Naveen's ability to move between AI strategy, legal risk, and geopolitics in a single session is unlike anything I have encountered. He doesn't just advise — he transforms how you think."</p><div class="t-auth">Priya Menon</div><div class="t-role">Senior Partner, Global Law Firm · Mumbai</div></div>
+    <div class="testi"><div class="t-stars">★★★★★</div><p class="t-q">"The Finance × AI course was career-defining. Naveen's dual decade in both fields creates insights no single-domain expert can produce. My investment framework is now fundamentally different."</p><div class="t-auth">Rodrigo Fonseca</div><div class="t-role">Managing Director, Investment Bank · São Paulo</div></div>
+    <div class="testi"><div class="t-stars">★★★★★</div><p class="t-q">"Receiving a Sovereign Mind certificate opened doors I didn't expect. But what mattered more was what I actually learned — frameworks that apply every single day in the field."</p><div class="t-auth">Aisha Al-Rashidi</div><div class="t-role">Chief Strategy Officer · Dubai</div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="fb">
+      <span class="brand-name">THE SOVEREIGN MIND</span>
+      <div class="brand-founder">Founded by Naveen Thella</div>
+      <p>A multi-disciplinary consulting and education institute at the intersection of AI, Finance, Law, Economics, Philosophy, Psychology, and Geopolitics. Based in Hyderabad, India. Operating globally.</p>
+    </div>
+    <div class="fc"><h5>Consulting</h5><ul><li><a href="#">AI Strategy</a></li><li><a href="#">Financial Advisory</a></li><li><a href="#">Legal Review</a></li><li><a href="#">Geopolitical Briefings</a></li><li><a href="#">Executive Coaching</a></li></ul></div>
+    <div class="fc"><h5>Academy</h5><ul><li><a href="#">Live Cohorts</a></li><li><a href="#">1:1 Mentorship</a></li><li><a href="#">Workshops</a></li><li><a href="#">All Courses</a></li><li><a href="#">Certifications</a></li></ul></div>
+    <div class="fc"><h5>Connect</h5><ul><li><a href="#">Book Naveen</a></li><li><a href="#">Publications</a></li><li><a href="#">Alumni Network</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 The Sovereign Mind · Naveen Thella. All rights reserved.</p>
+    <p>Hyderabad, India · Global Practice</p>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const D=document.getElementById('CUR');
+const R=document.querySelector('#CUR2 .r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  D.style.left=mx+'px';D.style.top=my+'px';
+});
+(function anim(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;R.style.left=rx+'px';R.style.top=ry+'px';requestAnimationFrame(anim);})();
+document.querySelectorAll('a,button,input,select,textarea,.hex-card,.svc,.c-card,.wshop-row,.prog-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{D.querySelector('.d').style.cssText='width:14px;height:14px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%);';R.style.cssText='width:60px;height:60px;border:1px solid var(--gold);border-radius:50%;transform:translate(-50%,-50%);opacity:.4;transition:all .2s ease-out;position:fixed;pointer-events:none;z-index:9998;';});
+  el.addEventListener('mouseleave',()=>{D.querySelector('.d').style.cssText='width:8px;height:8px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%);';R.style.cssText='width:44px;height:44px;border:1px solid var(--gold);border-radius:50%;transform:translate(-50%,-50%);opacity:.4;transition:all .2s ease-out;position:fixed;pointer-events:none;z-index:9998;';});
+});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('vis'),i*80);});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// MOBILE NAV
+function openMob(){document.getElementById('mobnav').classList.add('open');}
+function closeMob(){document.getElementById('mobnav').classList.remove('open');}
+
+// MODAL
+function openModal(t,s){
+  document.getElementById('mTitle').textContent=t;
+  document.getElementById('mSub').textContent=s;
+  document.getElementById('mFormWrap').style.display='';
+  document.getElementById('mSuccess').classList.remove('show');
+  document.getElementById('mainModal').classList.add('open');
+}
+function closeModal(){document.getElementById('mainModal').classList.remove('open');}
+document.getElementById('mainModal').addEventListener('click',e=>{if(e.target===document.getElementById('mainModal'))closeModal();});
+function submitModal(){
+  document.getElementById('mFormWrap').style.display='none';
+  document.getElementById('mSuccess').classList.add('show');
+}
+
+// BOOKING
+function submitBook(){
+  document.getElementById('bookFormInner').style.display='none';
+  document.getElementById('bookSuccess').classList.add('show');
+}
+
+// COURSE FILTER
+function fCourse(btn,d){
+  document.querySelectorAll('.cf-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.c-card').forEach(c=>{
+    c.style.display=(d==='all'||c.dataset.d===d)?'flex':'none';
+  });
+}
+</script>
+</body>
+</html>
